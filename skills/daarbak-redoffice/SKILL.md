@@ -31,7 +31,8 @@ Never sterile, never loud — approachable professionalism.
 ### Color palette
 | Token | Hex | Role |
 |---|---|---|
-| `--color-primary` | `#D5494B` | Redoffice red — primary action, accents |
+| `--color-primary` | `#D5494B` | Redoffice brand red — accents; preserve official value |
+| `--color-action` | `#CE4447` | Accessibility variant — primary controls with white text |
 | `--color-navy` | `#1E2B41` | Design navy — headings, dark UI, footers |
 | `--color-gray` | `#5F5A57` | Daarbak warm gray — body text, borders |
 | `--color-green` | `#618769` | Bop Recycle green — success, sustainability |
@@ -42,6 +43,10 @@ Never sterile, never loud — approachable professionalism.
 Default page background is beige `#EFEAE4`, not pure white — this warmth
 is core to the brand. Red is used sparingly as an accent, not a fill for
 large areas.
+
+`--color-action` is a UI contrast variant, not an official brand color.
+Keep `--color-primary` unchanged for brand assets and decorative accents.
+Do not use the action variant to recolor logos.
 
 ### Typography
 - **Office surfaces (docs, email, slides):** Calibri.
@@ -63,27 +68,42 @@ large areas.
 
 ## Component Families
 
-- **Buttons:** Primary = red `#D5494B` fill, white text, pill radius.
+- **Buttons:** Primary = action red `#CE4447` fill, white text, pill radius.
+  Use these opaque colors for default, hover, active, and focus states;
+  do not lighten the fill or reduce opacity on enabled controls.
   Secondary = navy outline on beige. Ghost = navy text, no border.
-  Min height 44px, 16–24px horizontal padding.
+  Min height 44px, 16–24px horizontal padding. Apply the same action
+  pairing to CTA links styled as buttons, submit controls, and selected
+  toggles/chips with white labels. Use navy, underlined text for inline
+  links on white/beige; do not use action red for small text on beige.
 - **Inputs:** White surface, 1px gray border, 8px radius, navy focus
   ring. Labels in navy, helper text in gray. 44px min height.
 - **Cards:** White or beige surface, 12px radius, soft shadow, 24–32px
   padding. Optional 4px red top-accent bar for emphasis.
-- **Navigation:** Navy bar, white logo lockup left, Poppins links.
+- **Navigation:** Navy bar, white logo lockup left, Poppins links with white text.
   Active link underlined in red.
-- **Modals:** Beige surface, navy heading with brand full-stop, red
-  primary action bottom-right.
+- **Modals:** Beige surface, navy heading with brand full-stop, action-red
+  primary action bottom-right using the same button colors and states.
 - **Tables/data:** Common for B2B (orders, pricing, spend). Navy header
   row, alternating beige/white rows, right-aligned numerics, gray rules.
 
 ## Accessibility Rules
 
-- Target WCAG 2.2 AA. Red `#D5494B` on white passes AA for large text
-  and UI components, but for body-size text on red, use white and verify
-  4.5:1. Never put red text on beige (insufficient contrast).
-- Navy `#1E2B41` on beige `#EFEAE4` is the safe default text pairing.
-- Keyboard-first: visible focus rings (2px navy), logical tab order.
+- Target WCAG 2.2 AA: text ≥4.5:1 (large text ≥3:1); required control
+  boundaries, state indicators, and meaningful icons ≥3:1 against adjacent
+  colors. Compare unrounded ratios using actual rendered colors, including
+  opacity, overlays, and every enabled state.
+- White on brand red `#D5494B` is only 4.29989:1: never use this pairing
+  for ordinary button labels. White on action red `#CE4447` is 4.62331:1.
+- Use navy `#1E2B41` for ordinary text/inline links on beige `#EFEAE4`.
+  Neither brand red nor action red passes 4.5:1 on beige. Green `#618769`
+  also fails with small white text; use navy text on a light surface with
+  green as an icon/accent, rather than inventing another variant.
+- Keyboard-first: logical tab order; visible 2px navy focus outline with 2px offset on
+  white/beige surfaces. On navy surfaces use a white outline. Keep the
+  outline visible and unclipped; never suppress it without a replacement.
+- Disabled controls are exempt from contrast minima; never use disabled
+  styling for enabled, loading, or selected controls.
 - All interactive targets ≥44×44px.
 - Don't rely on color alone — pair the recycle green with an icon/label.
 
@@ -117,8 +137,40 @@ large areas.
 - [ ] Red used only for accents/primary actions, never as large fill.
 - [ ] Headings navy, body warm gray, all text passes WCAG 2.2 AA.
 - [ ] Web type uses Poppins (or documented fallback).
+- [ ] Primary buttons/CTA links/selected controls use opaque action red
+      `#CE4447` + white in default, hover, active, and focus states.
+- [ ] Inline links on white/beige use navy text and a visible underline.
 - [ ] Buttons ≥44px, pill radius, correct primary/secondary roles.
 - [ ] Display headlines use the brand full-stop; body copy does not.
 - [ ] Logo rendered as DAARBAK (bold) REDOFFICE (regular), uppercase.
 - [ ] All interactive targets ≥44×44px with visible focus rings.
-- [ ] No off-palette colors introduced.
+- [ ] Official brand tokens preserved; only the documented action contrast
+      variant added, never substituted into logos.
+- [ ] Run `python3 skills/daarbak-redoffice/scripts/check_contrast.py` from
+      the repository root; reject failed token contrast checks.
+- [ ] Check the generated UI's computed colors in every enabled state,
+      including control boundaries/icons and focus outlines; the token
+      check alone does not certify a rendered portal or dashboard.
+
+### Contrast checks
+
+Use this table as the machine-checked minimums for opaque default tokens.
+The same primary pairing must apply to every enabled interaction state.
+
+| Foreground token | Background token | Minimum ratio |
+|---|---|---|
+| `--color-white` | `--color-action` | 4.5 |
+| `--color-navy` | `--color-white` | 4.5 |
+| `--color-navy` | `--color-surface` | 4.5 |
+| `--color-gray` | `--color-white` | 4.5 |
+| `--color-gray` | `--color-surface` | 4.5 |
+| `--color-action` | `--color-white` | 3 |
+| `--color-action` | `--color-surface` | 3 |
+| `--color-primary` | `--color-navy` | 3 |
+
+For focus outlines use navy against white/beige and white against navy;
+these pairs are covered above. The offset separates the outline from the
+control fill. Test other surfaces separately.
+
+WCAG references: [text contrast (1.4.3)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+and [non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html).
