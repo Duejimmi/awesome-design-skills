@@ -50,9 +50,15 @@ Do not use the action variant to recolor logos.
 
 ### Typography
 - **Office surfaces (docs, email, slides):** Calibri.
-- **Web / digital:** Poppins (primary web font).
+- **Web / digital:** Sofia Pro (primary); use Poppins only when Sofia Pro
+  cannot be used in the target environment.
 - **Print / design:** Sofia Pro.
-- For web UI, default to **Poppins**; fall back to system sans.
+- For web UI, default to **Sofia Pro**. Load the available, licensed font
+  faces with their actual family names and weights. If unavailable or not
+  permitted for the delivery, use Poppins and document the substitution.
+  System sans is a technical last resort, not a brand font. Do not claim
+  Sofia Pro is rendered based on a CSS family name alone; verify loading
+  and actual rendering. Do not publish proprietary font files in this repo.
 - Type scale (web): 12 / 14 / 16 (base) / 20 / 24 / 32 / 44.
 - Headings: navy `#1E2B41`, semibold, tight leading.
 - Body: warm gray `#5F5A57`, 16px, 1.6 line-height.
@@ -80,7 +86,8 @@ Do not use the action variant to recolor logos.
   ring. Labels in navy, helper text in gray. 44px min height.
 - **Cards:** White or beige surface, 12px radius, soft shadow, 24–32px
   padding. Optional 4px red top-accent bar for emphasis.
-- **Navigation:** Navy bar, white logo lockup left, Poppins links with white text.
+- **Navigation:** Navy bar, white logo lockup left, links using the chosen
+  web font (Sofia Pro first, documented Poppins alternative) with white text.
   Active link underlined in red.
 - **Modals:** Beige surface, navy heading with brand full-stop, action-red
   primary action bottom-right using the same button colors and states.
@@ -136,7 +143,9 @@ Do not use the action variant to recolor logos.
 - [ ] Page background defaults to beige `#EFEAE4`, not white.
 - [ ] Red used only for accents/primary actions, never as large fill.
 - [ ] Headings navy, body warm gray, all text passes WCAG 2.2 AA.
-- [ ] Web type uses Poppins (or documented fallback).
+- [ ] Web type uses Sofia Pro; Poppins is used only when Sofia Pro cannot
+      be used, with the reason documented. Verify loaded faces, weights,
+      and rendered Danish characters (æ/ø/å); report any technical fallback.
 - [ ] Primary buttons/CTA links/selected controls use opaque action red
       `#CE4447` + white in default, hover, active, and focus states.
 - [ ] Inline links on white/beige use navy text and a visible underline.

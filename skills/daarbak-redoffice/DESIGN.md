@@ -19,8 +19,11 @@ signature rhythmic device of the brand voice.
 - Colors and fonts follow Daarbak Designmanual v1.0 (Dec 2025).
 - Multi-division group: shared palette tokens let sibling divisions
   (Design, Bop Recycle, Plant) reuse the system while Redoffice owns red.
-- Poppins chosen as the web-safe digital equivalent of the print face
-  Sofia Pro; Calibri remains the Office-suite standard.
+- Use Sofia Pro as the primary font for web/digital and print/design.
+  Use Poppins as the documented web alternative only when Sofia Pro
+  cannot be used. Calibri remains the Office-suite standard.
+  Verify actual font loading and rendering; do not distribute proprietary
+  font files with this repository.
 
 ## Maintenance Notes
 
