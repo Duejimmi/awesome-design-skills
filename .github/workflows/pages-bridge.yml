@@ -36,6 +36,7 @@ jobs:
         run: |
           set -euo pipefail
           test -s _family_source/index.html
+          sudo chown -R "$(id -u):$(id -g)" _site
           mkdir -p _site/familieekspressen
           cp _family_source/index.html _site/familieekspressen/index.html
           cmp _family_source/index.html _site/familieekspressen/index.html
